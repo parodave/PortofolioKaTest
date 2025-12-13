@@ -68,7 +68,7 @@ export function HeroSection() {
           </div>
           <div className="flex items-center gap-2">
             <Phone className="h-4 w-4" />
-            <span>+33 7 81 57 92 22</span>
+            <span>+33 7 43 56 13 04</span>
           </div>
         </div>
       </div>

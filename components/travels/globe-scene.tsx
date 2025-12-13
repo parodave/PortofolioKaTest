@@ -1,8 +1,8 @@
 "use client"
 
-import { useRef, useMemo, useState } from "react"
-import { Canvas, useFrame, useLoader } from "@react-three/fiber"
-import { OrbitControls, Sphere } from "@react-three/drei"
+import { useRef, useMemo, useState, Suspense, useEffect } from "react"
+import { Canvas, useFrame } from "@react-three/fiber"
+import { OrbitControls, Sphere, useTexture } from "@react-three/drei"
 import * as THREE from "three"
 import type { Country } from "@/app/travels/page"
 
@@ -56,73 +56,6 @@ function Particles() {
   )
 }
 
-function CountryMarker({
-  country,
-  isHovered,
-  onHover,
-  onClick,
-}: {
-  country: Country
-  isHovered: boolean
-  onHover: (country: Country | null) => void
-  onClick: (country: Country) => void
-}) {
-  const position = useMemo(() => latLngToPosition(country.lat, country.lng, 2.05), [country.lat, country.lng])
-
-  return (
-    <group position={position}>
-      {/* Glow effect */}
-      <mesh>
-        <sphereGeometry args={[isHovered ? 0.08 : 0.05, 16, 16]} />
-        <meshBasicMaterial color={isHovered ? "#60a5fa" : "#3b82f6"} transparent opacity={0.3} />
-      </mesh>
-
-      {/* Core point */}
-      <mesh
-        onPointerOver={(e) => {
-          e.stopPropagation()
-          onHover(country)
-          document.body.style.cursor = "pointer"
-        }}
-        onPointerOut={() => {
-          onHover(null)
-          document.body.style.cursor = "auto"
-        }}
-        onClick={(e) => {
-          e.stopPropagation()
-          onClick(country)
-        }}
-      >
-        <sphereGeometry args={[isHovered ? 0.045 : 0.03, 16, 16]} />
-        <meshBasicMaterial color={isHovered ? "#ffffff" : "#60a5fa"} />
-      </mesh>
-
-      {/* Pulse ring for hovered */}
-      {isHovered && <PulseRing />}
-    </group>
-  )
-}
-
-function Continents() {
-  const texture = useLoader(THREE.TextureLoader, "/assets/3d/texture_earth.jpg")
-
-  const material = useMemo(() => {
-    return new THREE.MeshPhongMaterial({
-      map: texture,
-      transparent: true,
-      opacity: 0.35,
-      emissive: new THREE.Color("#4a7ab5"),
-      emissiveIntensity: 0.5,
-    })
-  }, [texture])
-
-  return (
-    <Sphere args={[2.005, 64, 64]}>
-      <primitive object={material} attach="material" />
-    </Sphere>
-  )
-}
-
 function PulseRing() {
   const ringRef = useRef<THREE.Mesh>(null)
 
@@ -143,6 +76,77 @@ function PulseRing() {
   )
 }
 
+function CountryMarker({
+  country,
+  isHovered,
+  onHover,
+  onClick,
+}: {
+  country: Country
+  isHovered: boolean
+  onHover: (country: Country | null) => void
+  onClick: (country: Country) => void
+}) {
+  const position = useMemo(() => latLngToPosition(country.lat, country.lng, 2.05), [country.lat, country.lng])
+
+  return (
+    <group position={position}>
+      <mesh>
+        <sphereGeometry args={[isHovered ? 0.08 : 0.05, 16, 16]} />
+        <meshBasicMaterial color={isHovered ? "#60a5fa" : "#3b82f6"} transparent opacity={0.3} />
+      </mesh>
+
+      <mesh
+        onPointerOver={(e) => {
+          e.stopPropagation()
+          onHover(country)
+          document.body.style.cursor = "pointer"
+        }}
+        onPointerOut={() => {
+          onHover(null)
+          document.body.style.cursor = "auto"
+        }}
+        onClick={(e) => {
+          e.stopPropagation()
+          onClick(country)
+        }}
+      >
+        <sphereGeometry args={[isHovered ? 0.045 : 0.03, 16, 16]} />
+        <meshBasicMaterial color={isHovered ? "#ffffff" : "#60a5fa"} />
+      </mesh>
+
+      {isHovered && <PulseRing />}
+    </group>
+  )
+}
+
+function Continents() {
+  const texture = useTexture("/assets/3d/texture_earth.jpg")
+
+  useEffect(() => {
+    if (!texture) return
+    texture.colorSpace = THREE.SRGBColorSpace
+    texture.flipY = false
+    texture.needsUpdate = true
+  }, [texture])
+
+  const material = useMemo(() => {
+    return new THREE.MeshPhongMaterial({
+      map: texture,
+      transparent: true,
+      opacity: 0.35,
+      emissive: new THREE.Color("#4a7ab5"),
+      emissiveIntensity: 0.5,
+    })
+  }, [texture])
+
+  return (
+    <Sphere args={[2.005, 64, 64]}>
+      <primitive object={material} attach="material" />
+    </Sphere>
+  )
+}
+
 function Globe({ countries, onCountryClick, onCountryHover, hoveredCountry }: GlobeSceneProps) {
   const globeRef = useRef<THREE.Group>(null)
   const glowRef = useRef<THREE.Mesh>(null)
@@ -150,13 +154,9 @@ function Globe({ countries, onCountryClick, onCountryHover, hoveredCountry }: Gl
 
   useFrame((state) => {
     if (globeRef.current) {
-      if (!isHoveringMarker) {
-        globeRef.current.rotation.y += 0.001
-      }
+      if (!isHoveringMarker) globeRef.current.rotation.y += 0.001
     }
-    if (glowRef.current) {
-      glowRef.current.rotation.y = state.clock.elapsedTime * 0.05
-    }
+    if (glowRef.current) glowRef.current.rotation.y = state.clock.elapsedTime * 0.05
   })
 
   const handleMarkerHover = (country: Country | null) => {
@@ -166,7 +166,6 @@ function Globe({ countries, onCountryClick, onCountryHover, hoveredCountry }: Gl
 
   return (
     <group ref={globeRef}>
-      {/* Earth sphere - base */}
       <Sphere args={[2, 64, 64]}>
         <meshPhongMaterial
           color="#0d1117"
@@ -180,7 +179,6 @@ function Globe({ countries, onCountryClick, onCountryHover, hoveredCountry }: Gl
 
       <Continents />
 
-      {/* Grid lines */}
       <Sphere args={[2.01, 32, 32]}>
         <meshBasicMaterial color="#3b82f6" wireframe transparent opacity={0.06} />
       </Sphere>
@@ -189,12 +187,10 @@ function Globe({ countries, onCountryClick, onCountryHover, hoveredCountry }: Gl
         <meshBasicMaterial color="#1e40af" wireframe transparent opacity={0.03} />
       </Sphere>
 
-      {/* Atmospheric glow */}
       <Sphere ref={glowRef} args={[2.15, 32, 32]}>
         <meshBasicMaterial color="#3b82f6" transparent opacity={0.05} side={THREE.BackSide} />
       </Sphere>
 
-      {/* Country markers - use handleMarkerHover instead of onCountryHover */}
       {countries.map((country) => (
         <CountryMarker
           key={country.name}
@@ -241,7 +237,9 @@ export function GlobeScene(props: GlobeSceneProps) {
       dpr={[1, 2]}
       gl={{ antialias: true, alpha: true }}
     >
-      <Scene {...props} />
+      <Suspense fallback={null}>
+        <Scene {...props} />
+      </Suspense>
     </Canvas>
   )
 }

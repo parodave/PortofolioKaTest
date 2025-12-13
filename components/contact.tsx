@@ -22,7 +22,7 @@ export function Contact() {
           </a>
         </Button>
         <Button variant="outline" asChild>
-          <a href="tel:+33781579222">
+          <a href="tel:+33743561304">
             <Phone className="mr-2 h-4 w-4" />
             Call Me
           </a>

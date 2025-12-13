@@ -63,13 +63,13 @@ export function SocialBeam() {
       <div className="flex size-full max-w-lg flex-row items-stretch justify-between gap-10">
         {/* Left column - 3 social icons */}
         <div className="flex flex-col justify-center gap-4">
-          <Circle ref={linkedinRef} href="https://linkedin.com/in/karimhammouche" label="LinkedIn">
+          <Circle ref={linkedinRef} href="https://www.linkedin.com/in/karim-h-497634248/" label="LinkedIn">
             <Linkedin className="size-5 text-[#0A66C2]" />
           </Circle>
-          <Circle ref={instagramRef} href="https://instagram.com/karimhammouche" label="Instagram">
+          <Circle ref={instagramRef} href="https://instagram.com" label="Instagram">
             <Instagram className="size-5 text-[#E4405F]" />
           </Circle>
-          <Circle ref={xRef} href="https://x.com/karimhammouche" label="X (Twitter)">
+          <Circle ref={xRef} href="https://x.com/parodave000?s=21" label="X (Twitter)">
             <XIcon className="size-5" />
           </Circle>
         </div>
@@ -88,13 +88,13 @@ export function SocialBeam() {
 
         {/* Right column - 3 social icons */}
         <div className="flex flex-col justify-center gap-4">
-          <Circle ref={githubRef} href="https://github.com/karimhammouche" label="GitHub">
+          <Circle ref={githubRef} href="https://github.com/parodave" label="GitHub">
             <Github className="size-5" />
           </Circle>
-          <Circle ref={fiverrRef} href="https://fiverr.com/karimhammouche" label="Fiverr">
+          <Circle ref={fiverrRef} href="https://fiverr.com" label="Fiverr">
             <FiverrIcon className="size-5 text-[#1DBF73]" />
           </Circle>
-          <Circle ref={websiteRef} href="https://krglobal.io" label="KR Global">
+          <Circle ref={websiteRef} href="https://krglobalsolutionsltd.com" label="KR Global">
             <Globe className="size-5 text-primary" />
           </Circle>
         </div>
