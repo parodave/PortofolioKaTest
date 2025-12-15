@@ -1,17 +1,15 @@
 "use client"
 
-import { Mail, MapPin, Phone } from "lucide-react"
+import { Mail, MapPin, Phone, Globe2 } from "lucide-react"
 import { ScrollVelocityContainer, ScrollVelocityRow } from "@/components/magicui/scroll-based-velocity"
 import { SparklesText } from "@/components/magicui/sparkles-text"
 
-// Greetings in 5 languages
 const HI_TRANSLATIONS = ["Hi", "Salut", "Marhaba", "こんにちは", "你好"]
 const IM_TRANSLATIONS = ["I'm", "Je suis", "Ana", "私は", "我是"]
 
 export function HeroSection() {
   return (
     <section id="hero" className="flex flex-col gap-8">
-      {/* Scroll Velocity Text - Greetings */}
       <div className="relative overflow-hidden py-4">
         <ScrollVelocityContainer className="mb-2">
           <ScrollVelocityRow baseVelocity={3} direction={1}>
@@ -37,9 +35,7 @@ export function HeroSection() {
         </ScrollVelocityContainer>
       </div>
 
-      {/* Main Hero Content */}
       <div className="flex flex-col gap-4">
-        {/* Name with Sparkles */}
         <div className="flex flex-col">
           <SparklesText
             className="text-4xl sm:text-5xl md:text-6xl tracking-tight"
@@ -51,24 +47,51 @@ export function HeroSection() {
         </div>
 
         <p className="text-muted-foreground max-w-md text-base sm:text-lg">
-          Entrepreneur & Web Developer. I build SaaS platforms, e-commerce stores, and integrate AI solutions.
-          Passionate about digital transformation.
+          Entrepreneur & Web Developer. I build SaaS platforms, e-commerce stores, and integrate AI solutions. Passionate
+          about digital transformation.
         </p>
 
         <div className="flex flex-col gap-1.5 mt-2 text-sm text-muted-foreground">
+          {/* Location */}
           <div className="flex items-center gap-2">
             <MapPin className="h-4 w-4" />
-            <span>Worldwide • French, Moroccan, Algerian</span>
+            <span>Worldwide</span>
           </div>
+
+          {/* Nationalities (new line under location) */}
+          <div className="flex items-center gap-2">
+            <Globe2 className="h-4 w-4" />
+            <span className="flex flex-wrap items-center gap-2">
+              <span aria-label="France" title="France" className="text-base leading-none">🇫🇷</span>
+              <span>French,</span>
+              <span aria-label="Morocco" title="Morocco" className="text-base leading-none">🇲🇦</span>
+              <span>Moroccan,</span>
+              <span aria-label="Algeria" title="Algeria" className="text-base leading-none">🇩🇿</span>
+              <span>Algerian</span>
+            </span>
+          </div>
+
+          {/* Email */}
           <div className="flex items-center gap-2">
             <Mail className="h-4 w-4" />
             <a href="mailto:karim@karimhammouche.com" className="hover:text-foreground transition-colors">
               karim@karimhammouche.com
             </a>
           </div>
+
+          {/* WhatsApp (clickable text, no button) */}
           <div className="flex items-center gap-2">
             <Phone className="h-4 w-4" />
-            <span>+33 7 43 56 13 04</span>
+            <a
+              href="https://wa.me/33743561304"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-foreground transition-colors"
+              aria-label="Available on WhatsApp"
+              title="Available on WhatsApp"
+            >
+              Available on WhatsApp
+            </a>
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 "use client"
 
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import Link from "next/link"
 
 const education = [
@@ -8,35 +8,35 @@ const education = [
     school: "Duke Language School",
     degree: "Full-time English Studies",
     period: "May 2025 – Sep 2025",
-    logo: "D",
-    href: "https://dukelanguageschool.com",
+    logo: "/logo/duke-language-school.png",
+    href: "https://dukelanguage.com",
   },
   {
     school: "Patong Language School",
     degree: "Student of English",
     period: "Jun 2024 – Sep 2024",
-    logo: "P",
-    href: "https://patonglanguageschool.com",
+    logo: "/logo/patong-language-school.png",
+    href: "https://www.phuket-languageschool.com",
   },
   {
     school: "Le Wagon",
     degree: "Web Application Developer Bootcamp",
-    period: "Fev 2023 - Jul 2023",
-    logo: "L",
+    period: "Feb 2023 – Jul 2023",
+    logo: "/logo/le-wagon.png",
     href: "https://www.lewagon.com",
   },
   {
     school: "Lycée Parc de Vilgénis",
     degree: "BTS Business and Sales Technician",
     period: "2014 – 2016",
-    logo: "P",
+    logo: "/logo/lycee-parc-vilgenis.png",
     href: "https://www.lyceevilgenis.fr/",
   },
   {
     school: "Lycée Léonard de Vinci",
     degree: "High School Diploma – Electrical/Electronic",
     period: "2011 – 2014",
-    logo: "L",
+    logo: "/logo/lycee-leonard-de-vinci.png",
     href: "https://lyc-vinci-st-michel.ac-versailles.fr/",
   },
 ]
@@ -56,8 +56,13 @@ export function Education() {
             className="flex items-center gap-3 py-2 group"
           >
             <Avatar className="size-12 border bg-muted">
+              <AvatarImage
+                src={edu.logo}
+                alt={edu.school}
+                className="object-contain p-1"
+              />
               <AvatarFallback className="text-xs font-semibold">
-                {edu.logo}
+                {edu.school[0]}
               </AvatarFallback>
             </Avatar>
 

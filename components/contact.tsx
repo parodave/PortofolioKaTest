@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { Mail, Phone } from "lucide-react"
 import { SocialBeam } from "@/components/social-beam"
@@ -15,14 +17,21 @@ export function Contact() {
       <SocialBeam />
 
       <div className="flex flex-col sm:flex-row gap-3 justify-center">
+        {/* Email */}
         <Button asChild>
           <a href="mailto:karim@karimhammouche.com">
             <Mail className="mr-2 h-4 w-4" />
             Email Me
           </a>
         </Button>
+
+        {/* WhatsApp (replaces Call Me) */}
         <Button variant="outline" asChild>
-          <a href="tel:+33743561304">
+          <a
+            href="https://wa.me/33743561304"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <Phone className="mr-2 h-4 w-4" />
             Call Me
           </a>

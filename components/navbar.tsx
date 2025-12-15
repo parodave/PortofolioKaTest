@@ -13,6 +13,7 @@ import {
   FolderIcon,
   PenLineIcon,
   Globe2Icon,
+  MailIcon,
 } from "lucide-react"
 
 const navItems = [
@@ -21,6 +22,7 @@ const navItems = [
   { href: "#work", icon: BriefcaseIcon, label: "Work" },
   { href: "#education", icon: GraduationCapIcon, label: "Education" },
   { href: "#projects", icon: FolderIcon, label: "Projects" },
+  { href: "#contact", icon: MailIcon, label: "Contact" },
 ]
 
 export function Navbar() {
@@ -47,19 +49,23 @@ export function Navbar() {
             </a>
           </Button>
         ))}
+
         <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full" asChild>
           <Link href="/blog">
             <PenLineIcon className="h-4 w-4" />
             <span className="sr-only">Blog</span>
           </Link>
         </Button>
+
         <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full" asChild>
           <Link href="/travels">
             <Globe2Icon className="h-4 w-4" />
             <span className="sr-only">Travels</span>
           </Link>
         </Button>
+
         <div className="w-px h-6 bg-border mx-1" />
+
         <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full" onClick={toggleTheme}>
           {isDark ? <SunIcon className="h-4 w-4" /> : <MoonIcon className="h-4 w-4" />}
           <span className="sr-only">Toggle theme</span>

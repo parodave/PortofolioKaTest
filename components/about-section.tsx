@@ -1,5 +1,7 @@
 "use client"
 
+import { Download } from "lucide-react"
+
 export function AboutSection() {
   return (
     <section id="about" className="flex flex-col gap-4">
@@ -17,6 +19,19 @@ export function AboutSection() {
         pressure. I also built strong digital competencies, allowing me to combine operational thinking with structured,
         efficient execution.
       </p>
+
+      {/* Download CV */}
+      <div className="flex justify-center pt-4">
+        <a
+          href="/cv/Karim_Hammouche_CV_EN.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 rounded-md bg-foreground px-4 py-2 text-sm font-semibold text-background hover:opacity-90 transition"
+        >
+          <Download className="h-4 w-4" />
+          Download CV (EN)
+        </a>
+      </div>
     </section>
   )
 }
