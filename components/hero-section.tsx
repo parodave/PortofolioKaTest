@@ -47,8 +47,7 @@ export function HeroSection() {
         </div>
 
         <p className="text-muted-foreground max-w-md text-base sm:text-lg">
-          Entrepreneur & Web Developer. I build SaaS platforms, e-commerce stores, and integrate AI solutions. Passionate
-          about digital transformation.
+          I operate digital and real-world businesses, bridging field operations, automation, e-commerce, and AI-driven systems to build scalable, efficient structures.
         </p>
 
         <div className="flex flex-col gap-1.5 mt-2 text-sm text-muted-foreground">
