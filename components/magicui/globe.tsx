@@ -8,10 +8,6 @@ type Props = {
   config?: Partial<COBEOptions>
 }
 
-/**
- * Globe (COBE) - rendu clair type MagicUI
- * Canvas transparent, globe clair + markers orange.
- */
 export function Globe({ className, config }: Props) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const containerRef = useRef<HTMLDivElement | null>(null)
@@ -20,23 +16,21 @@ export function Globe({ className, config }: Props) {
     () => ({
       width: 600,
       height: 600,
-      devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
+      // Valeur par défaut pour le build serveur
+      devicePixelRatio: 1, 
 
       phi: 0,
       theta: 0.25,
 
-      // IMPORTANT: rendu clair
       dark: 0,
       diffuse: 1.25,
       mapSamples: 20000,
       mapBrightness: 1.75,
 
-      // Couleurs (0..1)
       baseColor: [0.97, 0.97, 0.97],
       glowColor: [1, 1, 1],
       markerColor: [1, 0.55, 0.2],
 
-      // Markers exemple (tu peux laisser)
       markers: [
         { location: [51.5072, -0.1276], size: 0.06 },
         { location: [48.8566, 2.3522], size: 0.06 },
@@ -63,6 +57,7 @@ export function Globe({ className, config }: Props) {
       const w = Math.max(1, Math.floor(rect.width))
       const h = Math.max(1, Math.floor(rect.height))
 
+      // Calcul sécurisé ici car useEffect ne tourne que sur le navigateur
       const dpr = Math.min(window.devicePixelRatio || 1, 2)
       canvas.style.width = `${w}px`
       canvas.style.height = `${h}px`
