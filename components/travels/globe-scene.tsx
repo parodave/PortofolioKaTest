@@ -23,13 +23,13 @@ function latLngToPosition(lat: number, lng: number, radius: number): [number, nu
 }
 
 function Particles() {
-  const count = 2000
+  const count = 1000
   const particlesRef = useRef<THREE.Points>(null)
 
   const positions = useMemo(() => {
     const pos = new Float32Array(count * 3)
     for (let i = 0; i < count; i++) {
-      const radius = 15 + Math.random() * 25
+      const radius = 12 + Math.random() * 20
       const theta = Math.random() * Math.PI * 2
       const phi = Math.acos(2 * Math.random() - 1)
       pos[i * 3] = radius * Math.sin(phi) * Math.cos(theta)
@@ -42,7 +42,6 @@ function Particles() {
   useFrame((state) => {
     if (particlesRef.current) {
       particlesRef.current.rotation.y = state.clock.elapsedTime * 0.02
-      particlesRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.01) * 0.1
     }
   })
 
@@ -51,14 +50,13 @@ function Particles() {
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
-      <pointsMaterial size={0.03} color="#ffffff" transparent opacity={0.4} sizeAttenuation />
+      <pointsMaterial size={0.05} color="#94a3b8" transparent opacity={0.4} sizeAttenuation />
     </points>
   )
 }
 
 function PulseRing() {
   const ringRef = useRef<THREE.Mesh>(null)
-
   useFrame((state) => {
     if (ringRef.current) {
       const scale = 1 + Math.sin(state.clock.elapsedTime * 4) * 0.3
@@ -67,11 +65,11 @@ function PulseRing() {
       material.opacity = 0.5 - Math.sin(state.clock.elapsedTime * 4) * 0.3
     }
   })
-
   return (
     <mesh ref={ringRef} rotation={[Math.PI / 2, 0, 0]}>
       <ringGeometry args={[0.06, 0.08, 32]} />
-      <meshBasicMaterial color="#60a5fa" transparent opacity={0.5} side={THREE.DoubleSide} />
+      {/* CHANGEMENT ICI : Bleu foncé au lieu d'orange */}
+      <meshBasicMaterial color="#1e3a8a" transparent opacity={0.5} side={THREE.DoubleSide} />
     </mesh>
   )
 }
@@ -87,15 +85,18 @@ function CountryMarker({
   onHover: (country: Country | null) => void
   onClick: (country: Country) => void
 }) {
-  const position = useMemo(() => latLngToPosition(country.lat, country.lng, 2.05), [country.lat, country.lng])
+  const position = useMemo(() => latLngToPosition(country.lat, country.lng, 2.04), [country.lat, country.lng])
 
   return (
     <group position={position}>
+      {/* Halo autour du point */}
       <mesh>
         <sphereGeometry args={[isHovered ? 0.08 : 0.05, 16, 16]} />
-        <meshBasicMaterial color={isHovered ? "#60a5fa" : "#3b82f6"} transparent opacity={0.3} />
+        {/* CHANGEMENT ICI : Bleu foncé (#1e3a8a) et Bleu un peu plus clair au survol (#2563eb) */}
+        <meshBasicMaterial color={isHovered ? "#2563eb" : "#1e3a8a"} transparent opacity={0.8} />
       </mesh>
-
+      
+      {/* Point blanc au centre (on garde le blanc pour le contraste) */}
       <mesh
         onPointerOver={(e) => {
           e.stopPropagation()
@@ -112,9 +113,9 @@ function CountryMarker({
         }}
       >
         <sphereGeometry args={[isHovered ? 0.045 : 0.03, 16, 16]} />
-        <meshBasicMaterial color={isHovered ? "#ffffff" : "#60a5fa"} />
+        <meshBasicMaterial color="#ffffff" />
       </mesh>
-
+      
       {isHovered && <PulseRing />}
     </group>
   )
@@ -124,19 +125,20 @@ function Continents() {
   const texture = useTexture("/assets/3d/texture_earth.jpg")
 
   useEffect(() => {
-    if (!texture) return
-    texture.colorSpace = THREE.SRGBColorSpace
-    texture.flipY = false
-    texture.needsUpdate = true
+    if (texture) {
+      texture.colorSpace = THREE.SRGBColorSpace
+      texture.needsUpdate = true
+    }
   }, [texture])
 
   const material = useMemo(() => {
     return new THREE.MeshPhongMaterial({
       map: texture,
       transparent: true,
-      opacity: 0.35,
-      emissive: new THREE.Color("#4a7ab5"),
-      emissiveIntensity: 0.5,
+      opacity: 0.7,
+      blending: THREE.AdditiveBlending, 
+      color: "#ffffff",
+      side: THREE.DoubleSide
     })
   }, [texture])
 
@@ -149,14 +151,12 @@ function Continents() {
 
 function Globe({ countries, onCountryClick, onCountryHover, hoveredCountry }: GlobeSceneProps) {
   const globeRef = useRef<THREE.Group>(null)
-  const glowRef = useRef<THREE.Mesh>(null)
   const [isHoveringMarker, setIsHoveringMarker] = useState(false)
 
   useFrame((state) => {
-    if (globeRef.current) {
-      if (!isHoveringMarker) globeRef.current.rotation.y += 0.001
+    if (globeRef.current && !isHoveringMarker) {
+      globeRef.current.rotation.y += 0.001
     }
-    if (glowRef.current) glowRef.current.rotation.y = state.clock.elapsedTime * 0.05
   })
 
   const handleMarkerHover = (country: Country | null) => {
@@ -166,31 +166,25 @@ function Globe({ countries, onCountryClick, onCountryHover, hoveredCountry }: Gl
 
   return (
     <group ref={globeRef}>
+      {/* 1. EAU (Sphère de base) - Bleu Ciel */}
       <Sphere args={[2, 64, 64]}>
         <meshPhongMaterial
-          color="#0d1117"
-          emissive="#0a0a15"
+          color="#bae6fd" 
+          emissive="#e0f2fe"
           emissiveIntensity={0.2}
-          shininess={5}
-          transparent
-          opacity={0.98}
+          shininess={10}
         />
       </Sphere>
 
+      {/* 2. CONTINENTS */}
       <Continents />
 
+      {/* 3. GRILLE LÉGÈRE */}
       <Sphere args={[2.01, 32, 32]}>
-        <meshBasicMaterial color="#3b82f6" wireframe transparent opacity={0.06} />
+        <meshBasicMaterial color="#64748b" wireframe transparent opacity={0.1} />
       </Sphere>
 
-      <Sphere args={[2.008, 48, 48]}>
-        <meshBasicMaterial color="#1e40af" wireframe transparent opacity={0.03} />
-      </Sphere>
-
-      <Sphere ref={glowRef} args={[2.15, 32, 32]}>
-        <meshBasicMaterial color="#3b82f6" transparent opacity={0.05} side={THREE.BackSide} />
-      </Sphere>
-
+      {/* 4. MARQUEURS */}
       {countries.map((country) => (
         <CountryMarker
           key={country.name}
@@ -207,10 +201,10 @@ function Globe({ countries, onCountryClick, onCountryHover, hoveredCountry }: Gl
 function Scene(props: GlobeSceneProps) {
   return (
     <>
-      <ambientLight intensity={0.3} />
-      <pointLight position={[10, 10, 10]} intensity={0.8} color="#ffffff" />
-      <pointLight position={[-10, -10, -10]} intensity={0.3} color="#3b82f6" />
-
+      <ambientLight intensity={1.5} />
+      <pointLight position={[10, 10, 10]} intensity={1.2} color="#ffffff" />
+      <pointLight position={[-10, -10, -10]} intensity={0.8} color="#bae6fd" />
+      
       <Particles />
       <Globe {...props} />
 
@@ -219,8 +213,6 @@ function Scene(props: GlobeSceneProps) {
         enableZoom={true}
         minDistance={3.5}
         maxDistance={8}
-        minPolarAngle={Math.PI * 0.2}
-        maxPolarAngle={Math.PI * 0.8}
         rotateSpeed={0.5}
         zoomSpeed={0.5}
         autoRotate={false}

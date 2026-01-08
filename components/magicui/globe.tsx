@@ -8,6 +8,10 @@ type Props = {
   config?: Partial<COBEOptions>
 }
 
+/**
+ * Globe (COBE) - Thème Clair
+ * Fond blanc, eau bleu clair, continents visibles.
+ */
 export function Globe({ className, config }: Props) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const containerRef = useRef<HTMLDivElement | null>(null)
@@ -22,15 +26,18 @@ export function Globe({ className, config }: Props) {
       phi: 0,
       theta: 0.25,
 
-      dark: 0,
-      diffuse: 1.25,
+      // === CONFIGURATION DES COULEURS ===
+      dark: 0,           // 0 = Thème clair (fond blanc)
+      diffuse: 1.2,      // Luminosité globale
       mapSamples: 20000,
-      mapBrightness: 1.75,
+      mapBrightness: 4,  // Luminosité de la carte (pour bien voir les continents)
 
-      baseColor: [0.97, 0.97, 0.97],
-      glowColor: [1, 1, 1],
-      markerColor: [1, 0.55, 0.2],
+      // Couleurs (format RGB de 0 à 1)
+      baseColor: [0.97, 0.97, 0.97], // Couleur des continents (Gris très clair)
+      glowColor: [1, 1, 1],          // Couleur de la lueur autour (Blanc)
+      markerColor: [1, 0.55, 0.2],   // Couleur des points (Orange)
 
+      // Vos marqueurs (inchangés)
       markers: [
         { location: [51.5072, -0.1276], size: 0.06 },
         { location: [48.8566, 2.3522], size: 0.06 },
@@ -74,7 +81,8 @@ export function Globe({ className, config }: Props) {
       height: canvas.height,
       devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
       onRender: (state) => {
-        phi += 0.006
+        // Vitesse de rotation
+        phi += 0.003
         state.phi = phi
         state.width = canvas.width
         state.height = canvas.height
@@ -106,6 +114,7 @@ export function Globe({ className, config }: Props) {
         ref={canvasRef}
         aria-label="Globe"
         className="block h-full w-full"
+        // Le fond du canvas est transparent, c'est le fond de la page (blanc) qui se verra.
         style={{ background: "transparent" }}
       />
     </div>

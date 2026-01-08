@@ -9,19 +9,19 @@ import { Navbar } from "@/components/navbar"
 import { NavDecor } from "@/components/nav-decor"
 
 export default function Home() {
-  return (
-    <main className="min-h-screen bg-background">
-      <NavDecor />
-      <Navbar />
-      <div className="mx-auto max-w-2xl px-6 py-12 space-y-10">
-        <HeroSection />
-        <AboutSection />
-        <WorkExperience />
-        <Education />
-        <Skills />
-        <Projects />
-        <Contact />
-      </div>
-    </main>
-  )
+return (
+<main className="min-h-screen bg-background">
+<NavDecor />
+<Navbar />
+<div className="mx-auto max-w-2xl px-6 py-12 space-y-10">
+<HeroSection />
+<AboutSection />
+<WorkExperience />
+<Education />
+<Skills />
+<Projects />
+<Contact />
+</div>
+</main>
+)
 }
