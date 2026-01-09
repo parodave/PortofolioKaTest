@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import WordRotate from "@/components/magicui/word-rotate"
 import {
   MoonIcon,
   SunIcon,
@@ -56,9 +57,15 @@ export function Navbar() {
           </Button>
         ))}
 
-        <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full" asChild>
+        <Button variant="ghost" className="h-9 w-9 md:w-auto md:px-4 rounded-full flex items-center justify-center" asChild>
           <Link href="/blog">
-            <PenLineIcon className="h-4 w-4" />
+            <PenLineIcon className="h-4 w-4 md:hidden" />
+            <div className="hidden md:block">
+              <WordRotate
+                words={["Blog", "Articles", "Infos"]}
+                className="text-sm font-medium"
+              />
+            </div>
             <span className="sr-only">Blog</span>
           </Link>
         </Button>
