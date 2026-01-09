@@ -1,30 +1,99 @@
-# Portfolio creation
+# Portfolio Personnel
 
-*Automatically synced with your [v0.app](https://v0.app) deployments*
+Ce projet est un portfolio personnel moderne et interactif, conçu pour présenter un parcours professionnel, des compétences et des réalisations. Il est construit avec les dernières technologies web pour offrir une expérience utilisateur fluide, performante et esthétique.
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/paros-projects-7b9c261c/v0-portofolio)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.app-black?style=for-the-badge)](https://v0.app/chat/dYSqrXKWBdg)
+## 🚀 Technologies Utilisées
 
-## Overview
+Ce projet repose sur une stack technique robuste et moderne :
 
-This repository will stay in sync with your deployed chats on [v0.app](https://v0.app).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.app](https://v0.app).
+-   **[Next.js](https://nextjs.org/)** : Framework React pour le rendu côté serveur et la génération de site statique (App Router).
+-   **[TypeScript](https://www.typescriptlang.org/)** : Superset typé de JavaScript pour un code plus fiable et maintenable.
+-   **[Tailwind CSS](https://tailwindcss.com/)** : Framework CSS utilitaire pour un design rapide et responsive.
+-   **[Framer Motion](https://www.framer.com/motion/)** : Bibliothèque d'animations pour React.
+-   **[Radix UI](https://www.radix-ui.com/)** : Composants UI non stylés et accessibles.
+-   **[React Hook Form](https://react-hook-form.com/)** & **[Zod](https://zod.dev/)** : Gestion et validation de formulaires performante.
+-   **[Lucide React](https://lucide.dev/)** : Bibliothèque d'icônes.
+-   **[Magic UI](https://magicui.design/)** : Composants d'interface utilisateur pour des effets visuels avancés.
+-   **[Next Themes](https://github.com/pacocoursey/next-themes)** : Gestion du mode sombre et clair.
 
-## Deployment
+## ✨ Fonctionnalités
 
-Your project is live at:
+Le portfolio inclut les sections et fonctionnalités suivantes :
 
-**[https://vercel.com/paros-projects-7b9c261c/v0-portofolio](https://vercel.com/paros-projects-7b9c261c/v0-portofolio)**
+-   **Hero Section** : Introduction visuelle impactante.
+-   **À Propos** : Présentation personnelle.
+-   **Expérience Professionnelle** : Chronologie du parcours pro.
+-   **Éducation** : Parcours académique.
+-   **Compétences** : Liste des compétences techniques (Skills).
+-   **Projets** : Galerie des réalisations avec détails.
+-   **Contact** : Formulaire de contact fonctionnel.
+-   **Mode Sombre/Clair** : Thème adaptable aux préférences de l'utilisateur.
+-   **Design Responsive** : Optimisé pour tous les écrans (mobile, tablette, desktop).
+-   **Animations Fluides** : Transitions et interactions soignées.
 
-## Build your app
+## 🛠️ Installation et Démarrage
 
-Continue building your app on:
+Pour lancer ce projet localement, suivez ces étapes :
 
-**[https://v0.app/chat/dYSqrXKWBdg](https://v0.app/chat/dYSqrXKWBdg)**
+### Prérequis
 
-## How It Works
+Assurez-vous d'avoir **Node.js** installé. Ce projet utilise **pnpm** comme gestionnaire de paquets.
 
-1. Create and modify your project using [v0.app](https://v0.app)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+### Installation
+
+1.  Clonez le dépôt :
+    ```bash
+    git clone <votre-url-du-repo>
+    cd <nom-du-dossier>
+    ```
+
+2.  Installez les dépendances :
+    ```bash
+    pnpm install
+    ```
+
+### Lancement en développement
+
+Pour démarrer le serveur de développement :
+
+```bash
+pnpm dev
+```
+
+Ouvrez [http://localhost:3000](http://localhost:3000) dans votre navigateur pour voir le résultat.
+
+### Construction pour la production
+
+Pour créer une version optimisée pour la production :
+
+```bash
+pnpm build
+```
+
+Pour prévisualiser la version de production localement :
+
+```bash
+pnpm start
+```
+
+## 📂 Structure du Projet
+
+Voici un aperçu de l'organisation des fichiers :
+
+-   `app/` : Contient les pages et le layout principal (App Router de Next.js).
+    -   `page.tsx` : Page d'accueil regroupant toutes les sections.
+    -   `layout.tsx` : Layout global (incluant les polices, le thème, etc.).
+-   `components/` : Composants Réutilisables.
+    -   `ui/` : Composants de base (boutons, inputs, cards...) basés sur Radix UI.
+    -   `magicui/` : Composants spécifiques pour les effets visuels.
+    -   `hero-section.tsx`, `about-section.tsx`, etc. : Composants spécifiques à chaque section du portfolio.
+-   `lib/` : Fonctions utilitaires (ex: gestion des classes CSS).
+-   `public/` : Fichiers statiques (images, favicons).
+
+## 🎨 Personnalisation
+
+Vous pouvez personnaliser le contenu en modifiant les composants situés dans le dossier `components/`. Les couleurs et styles globaux peuvent être ajustés dans `app/globals.css` ou via la configuration Tailwind.
+
+---
+
+*Généré pour un projet v0.*
