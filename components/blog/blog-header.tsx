@@ -18,7 +18,7 @@ export function BlogHeader() {
     <div className="mb-10">
       <h1 className="text-4xl font-bold tracking-tight mb-2">Blog</h1>
       <p className="text-muted-foreground mb-6">
-        Mes articles et réflexions sur l'entrepreneuriat, la tech et le développement.
+        Mes articles et réflexions sur l&apos;entrepreneuriat, la tech et le développement.
       </p>
       <div className="flex flex-wrap gap-2">
         {categories.map((category) => (

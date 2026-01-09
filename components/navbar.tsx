@@ -1,7 +1,7 @@
 "use client"
 
-import { useState, useEffect } from "react"
 import Link from "next/link"
+import { useTheme } from "next-themes"
 import { Button } from "@/components/ui/button"
 import {
   MoonIcon,
@@ -26,17 +26,7 @@ const navItems = [
 ]
 
 export function Navbar() {
-  const [isDark, setIsDark] = useState(false)
-
-  useEffect(() => {
-    const isDarkMode = document.documentElement.classList.contains("dark")
-    setIsDark(isDarkMode)
-  }, [])
-
-  const toggleTheme = () => {
-    setIsDark(!isDark)
-    document.documentElement.classList.toggle("dark")
-  }
+  const { resolvedTheme, setTheme } = useTheme()
 
   return (
     <nav className="fixed bottom-6 left-1/2 z-50 -translate-x-1/2">
@@ -72,8 +62,14 @@ export function Navbar() {
 
         <div className="mx-1 h-6 w-px bg-border" />
 
-        <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full" onClick={toggleTheme}>
-          {isDark ? <SunIcon className="h-4 w-4" /> : <MoonIcon className="h-4 w-4" />}
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-9 w-9 rounded-full"
+          onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+        >
+          <SunIcon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+          <MoonIcon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
           <span className="sr-only">Toggle theme</span>
         </Button>
       </div>
