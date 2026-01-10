@@ -13,7 +13,7 @@ export function NavDecor() {
             aria-label="Go to Travels"
             className="fixed left-10 top-24 block"
           >
-            <div className="relative h-[220px] w-[220px] overflow-hidden rounded-full">
+            <div className="relative h-[110px] w-[110px] sm:h-[160px] sm:w-[160px] md:h-[220px] md:w-[220px] overflow-hidden rounded-full">
               <Globe
                 className="absolute inset-0 h-full w-full"
                 config={{
