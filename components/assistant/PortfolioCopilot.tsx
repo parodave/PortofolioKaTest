@@ -15,8 +15,6 @@ const EMPTY_STATE =
 const DISCLAIMER =
   "Réponses basées uniquement sur le contenu public du portfolio.";
 
-const API_FALLBACK = "https://your-space.hf.space/predict";
-
 type Message = {
   role: "user" | "assistant";
   content: string;
@@ -27,10 +25,7 @@ export default function PortfolioCopilot() {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const apiUrl = useMemo(
-    () => process.env.NEXT_PUBLIC_PORTFOLIO_COPILOT_URL ?? API_FALLBACK,
-    [],
-  );
+  const apiUrl = useMemo(() => "/api/chat", []);
 
   const sendMessage = async (question: string) => {
     if (!question.trim()) {
@@ -38,7 +33,8 @@ export default function PortfolioCopilot() {
     }
 
     const newMessage: Message = { role: "user", content: question.trim() };
-    setMessages((prev) => [...prev, newMessage]);
+    const nextMessages = [...messages, newMessage];
+    setMessages(nextMessages);
     setInput("");
     setIsLoading(true);
 
@@ -51,7 +47,7 @@ export default function PortfolioCopilot() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ data: [question.trim()] }),
+        body: JSON.stringify({ messages: nextMessages }),
         signal: controller.signal,
       });
 
@@ -59,8 +55,8 @@ export default function PortfolioCopilot() {
         throw new Error("Erreur API");
       }
 
-      const data = (await response.json()) as { data?: string[] };
-      const answer = data?.data?.[0] ??
+      const data = (await response.json()) as { reply?: string };
+      const answer = data?.reply ??
         "Le service est surchargé. Réessaie dans quelques instants.";
 
       setMessages((prev) => [...prev, { role: "assistant", content: answer }]);

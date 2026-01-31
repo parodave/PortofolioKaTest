@@ -9,10 +9,12 @@
 
 ## 2) Configurer le site Next.js
 1. Ajoute une variable d’environnement dans `.env.local` :
-   - `NEXT_PUBLIC_PORTFOLIO_COPILOT_URL=https://TON-SPACE.hf.space/predict`
+   - `HF_SPACE_BASE_URL=https://TON-SPACE.hf.space`
 2. Lance le site : `npm run dev`.
-3. Va sur `/assistant` pour tester l’interface.
+3. Va sur `/assistant` pour tester l’interface (le frontend appelle `/api/chat`).
 
 ## 3) Rappels importants
+- Le backend dépend de `HF_SPACE_BASE_URL` pour joindre le Space Hugging Face.
 - Pas de clé API, pas de stockage utilisateur, pas de paiement.
 - Les réponses sont basées uniquement sur `portfolio.knowledge.json`.
+- Si la réponse indique que le service est indisponible, vérifie d’abord que le Space est en ligne et que l’URL est correcte.
