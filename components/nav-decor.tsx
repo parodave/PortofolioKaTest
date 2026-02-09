@@ -32,14 +32,6 @@ export function NavDecor() {
           </Link>
         </div>
 
-        <div className="pointer-events-auto fixed right-10 top-12">
-          <Link
-            href="/blog"
-            className="inline-flex items-center justify-center rounded-2xl bg-background px-6 py-3 text-sm font-medium shadow-sm ring-1 ring-black/10 transition hover:shadow-md dark:ring-white/10"
-          >
-            Blog K
-          </Link>
-        </div>
       </div>
     </div>
   )
