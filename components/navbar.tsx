@@ -15,6 +15,7 @@ import {
   PenLineIcon,
   Globe2Icon,
   MailIcon,
+  BotIcon,
 } from "lucide-react"
 
 const navItems = [
@@ -74,6 +75,13 @@ export function Navbar() {
           <Link href="/travels">
             <Globe2Icon className="h-4 w-4" />
             <span className="sr-only">Travels</span>
+          </Link>
+        </Button>
+
+        <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full" asChild>
+          <Link href="/assistant" aria-label="Assistant">
+            <BotIcon className="h-4 w-4" />
+            <span className="sr-only">Assistant</span>
           </Link>
         </Button>
 
